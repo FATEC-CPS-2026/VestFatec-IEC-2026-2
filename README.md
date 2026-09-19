@@ -1,1 +1,3 @@
-# VestFatec-IEC-2026-2
+# VestFatec
+
+VestFatec é um projeto estudantil 
