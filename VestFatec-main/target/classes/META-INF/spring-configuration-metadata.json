@@ -1,0 +1,23 @@
+{
+  "groups": [
+    {
+      "name": "app.security.jwt",
+      "type": "br.com.vestfatec.security.JwtProperties",
+      "sourceType": "br.com.vestfatec.security.JwtProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "app.security.jwt.expiration-ms",
+      "type": "java.lang.Long",
+      "sourceType": "br.com.vestfatec.security.JwtProperties",
+      "defaultValue": 0
+    },
+    {
+      "name": "app.security.jwt.secret",
+      "type": "java.lang.String",
+      "sourceType": "br.com.vestfatec.security.JwtProperties"
+    }
+  ],
+  "hints": []
+}
