@@ -2,4 +2,4 @@
 
 VestFatec é um projeto estudantil para FATEC Itaquera
 
-2026
+No ano de 2026 
