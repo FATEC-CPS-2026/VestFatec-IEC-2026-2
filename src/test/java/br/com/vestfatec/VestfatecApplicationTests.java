@@ -14,6 +14,6 @@ class VestfatecApplicationTests {
 
     @Test
     void falhar(){
-        org.junit.jupiter.api.Assertions.fail("Exemplo de falha");
+        org.junit.jupiter.api.Assertions.fail("Exemplo de falha!");
     }
 }
