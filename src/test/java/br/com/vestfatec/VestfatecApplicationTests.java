@@ -11,4 +11,9 @@ class VestfatecApplicationTests {
     @Test
     void contextLoads() {
     }
+
+    @Test
+    void falhar(){
+        org.junit.jupiter.api.Assertions.fail("Exemplo de falha");
+    }
 }
