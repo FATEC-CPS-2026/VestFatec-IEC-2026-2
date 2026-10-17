@@ -1,3 +1,3 @@
 # VestFatec
 
-VestFatec é um projeto estudantil 
+VestFatec é um projeto estudantil para FATEC Itaquera
