@@ -13,7 +13,7 @@ pipeline{
     stages{
         stage('Baixar o Código'){
             steps{
-                git branch: 'main',
+                git branch: 'feat-pipeline-jenkins',
                     url: 'https://github.com/FATEC-CPS-2026/VestFatec-IEC-2026-2.git'
             }
         }
