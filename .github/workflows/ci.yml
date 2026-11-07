@@ -23,3 +23,12 @@ jobs:
 
       - name: Executar teste
         run: mvn -B test
+
+      - name: Gerar o JAR
+        run: mvn -B -DskipTests package
+
+      - name: Publicar o artefato
+        uses: actions/upload-artifact@v4 
+        with:
+          name: app-java
+          path: target/*.jar 
