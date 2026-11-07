@@ -1,5 +1,5 @@
 # VestFatec
 
-VestFatec é um projeto estudantil 2026 na Fatec Itaquera Prof Miguel Reale
+VestFatec é um projeto estudantil 2026
 
-
+07 de Novembro de 2026
