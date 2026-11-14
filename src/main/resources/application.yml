@@ -1,26 +1,19 @@
+
 spring:
   application:
     name: vestfatec
+
   datasource:
-    url: jdbc:postgresql://localhost:5432/vestfatec
-    username: vestfatec
-    password: vestfatec
+    url: ${DB_URL:jdbc:h2:file:./data/vestfatec}
+    username: ${DB_USER:sa}
+    password: ${DB_PASSWORD:}
+    driver-class-name: org.h2.Driver
+
   jpa:
     hibernate:
       ddl-auto: update
     open-in-view: false
     show-sql: true
-  data:
-    redis:
-      host: localhost
-      port: 6379
 
 server:
-  port: 8080
-
-app:
-  security:
-    jwt:
-      # Chave base64 para HMAC-SHA256. Trocar em producao.
-      secret: "c3VhLWNoYXZlLWxvbmdhLWUtYWxlYXRvcmlhLWVtLWJhc2U2NC1wYXJhLWRldg=="
-      expiration-ms: 3600000
+  port: ${PORT:8080}

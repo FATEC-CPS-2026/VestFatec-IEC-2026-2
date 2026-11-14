@@ -3,7 +3,6 @@ package br.com.vestfatec.candidate;
 import br.com.vestfatec.candidate.dto.CandidateRequest;
 import br.com.vestfatec.candidate.dto.CandidateResponse;
 import java.util.List;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,7 +34,6 @@ public class CandidateService {
         return CandidateResponse.from(candidateRepository.save(candidate));
     }
 
-    @Cacheable(value = "candidates", key = "'all'")
     @Transactional(readOnly = true)
     public List<CandidateResponse> findAll() {
         return candidateRepository.findAll().stream()
@@ -43,7 +41,6 @@ public class CandidateService {
                 .toList();
     }
 
-    @Cacheable(value = "candidates", key = "#id")
     @Transactional(readOnly = true)
     public CandidateResponse findById(Long id) {
         Candidate candidate = candidateRepository.findById(id)

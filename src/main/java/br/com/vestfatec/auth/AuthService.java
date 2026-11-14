@@ -3,13 +3,14 @@ package br.com.vestfatec.auth;
 import br.com.vestfatec.auth.dto.AuthRequest;
 import br.com.vestfatec.auth.dto.AuthResponse;
 import br.com.vestfatec.auth.dto.RegisterRequest;
-import br.com.vestfatec.security.CustomUserDetailsService;
-import br.com.vestfatec.security.JwtService;
 import br.com.vestfatec.user.User;
 import br.com.vestfatec.user.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,19 +21,13 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-    private final JwtService jwtService;
-    private final CustomUserDetailsService userDetailsService;
 
     public AuthService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
-                       AuthenticationManager authenticationManager,
-                       JwtService jwtService,
-                       CustomUserDetailsService userDetailsService) {
+                       AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
-        this.jwtService = jwtService;
-        this.userDetailsService = userDetailsService;
     }
 
     @Transactional
@@ -48,16 +43,22 @@ public class AuthService {
         );
 
         userRepository.save(user);
-        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
-        return new AuthResponse(jwtService.generateToken(userDetails));
+        return login(new AuthRequest(request.email(), request.password()));
     }
 
+    @Transactional(readOnly = true)
     public AuthResponse login(AuthRequest request) {
-        authenticationManager.authenticate(
+        Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.email(), request.password())
         );
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(request.email());
-        return new AuthResponse(jwtService.generateToken(userDetails));
+        User user = userRepository.findByEmail(authentication.getName())
+                .orElseThrow(() -> new BadCredentialsException("Credenciais invalidas"));
+
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
+        context.setAuthentication(authentication);
+        SecurityContextHolder.setContext(context);
+
+        return AuthResponse.from(user);
     }
 }
