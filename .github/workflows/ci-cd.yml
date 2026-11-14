@@ -5,6 +5,9 @@ on:
     branches:
       - feat-render
 
+  workflow_dipatch:
+permisssions:
+  contents: read
       
 jobs:
   build:
@@ -42,7 +45,7 @@ jobs:
     steps:
       - name: Realizar o deploy
         env:
-          RENDER_DEPLOY_HOOK_URL: ${{secrets.RENDER_DEPLOY_HOOK_URL}}
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
 
         run:
           curl --fail --silent --show-error \ --request POST \ 
