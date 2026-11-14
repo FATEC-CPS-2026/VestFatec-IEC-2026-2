@@ -6,8 +6,6 @@ on:
       - feat-render
 
  
-permisssions:
-  contents: read
 
 jobs:
   build:
