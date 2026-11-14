@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Configurar o JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      
+      - name: Compilar
+        run: mvn -B clean compile
+
+      - name: Executar teste
+        run: mvn -B test
+
+      - name: Gerar o JAR
+        run: mvn -B -DskipTests package
+
+      - name: Publicar o artefato
+        uses: actions/upload-artifact@v4 
+        with:
+          name: app-java
+          path: target/*.jar 
